@@ -1,5 +1,5 @@
 package domain.model
 
 interface CurrencyApiService {
-    fun getLatestExchangeRates(): RequestState<List<Currency>>
+   suspend fun getLatestExchangeRates(): RequestState<List<Currency>>
 }

@@ -1,7 +1,9 @@
 package domain.model
 
+import io.realm.kotlin.types.RealmObject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.mongodb.kbson.ObjectId
 
 @Serializable
 data class ApiResponse(
@@ -16,7 +18,8 @@ data class MetaData(
 )
 
 @Serializable
-data class Currency(
-    val code: String,
-    val value: Double
-)
+open class Currency : RealmObject {
+    var _id: ObjectId = ObjectId()
+    val code: String = ""
+    val value: Double = 0.0
+}

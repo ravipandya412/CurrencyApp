@@ -12,6 +12,8 @@ import domain.model.Currency
 import domain.model.CurrencyApiService
 import domain.model.RateStatus
 import domain.model.RequestState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -41,6 +43,8 @@ class HomeViewModel(
     init {
         screenModelScope.launch {
             fetchNewRates()
+            readSourceCurrency()
+            readTargetCurrency()
         }
     }
 
@@ -49,6 +53,32 @@ class HomeViewModel(
             HomeUiEvent.RefreshRates -> {
                 screenModelScope.launch {
                     fetchNewRates()
+                }
+            }
+        }
+    }
+
+    private fun readSourceCurrency() {
+        screenModelScope.launch(Dispatchers.Main) {
+            preferences.readSourceCurrencyCode().collectLatest { currencyCode ->
+                val selectedCurrency = _allCurrencies.find { it.code == currencyCode.name }
+                if (selectedCurrency != null) {
+                    _sourceCurrency.value = RequestState.Success(data = selectedCurrency)
+                } else {
+                    _sourceCurrency.value = RequestState.Error(message = "Could not find")
+                }
+            }
+        }
+    }
+
+    private fun readTargetCurrency() {
+        screenModelScope.launch(Dispatchers.Main) {
+            preferences.readTargetCurrencyCode().collectLatest { currencyCode ->
+                val targetCurrency = _allCurrencies.find { it.code == currencyCode.name }
+                if (targetCurrency != null) {
+                    _targetCurrency.value = RequestState.Success(data = targetCurrency)
+                } else {
+                    _targetCurrency.value = RequestState.Error(message = "Could not find")
                 }
             }
         }

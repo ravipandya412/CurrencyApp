@@ -20,6 +20,6 @@ data class MetaData(
 @Serializable
 open class Currency : RealmObject {
     var _id: ObjectId = ObjectId()
-    val code: String = ""
-    val value: Double = 0.0
+    var code: String = ""
+    var value: Double = 0.0
 }

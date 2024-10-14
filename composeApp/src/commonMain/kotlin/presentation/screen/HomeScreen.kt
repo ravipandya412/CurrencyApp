@@ -32,14 +32,21 @@ class HomeScreen : Screen {
 
         var dialogOpened by remember { mutableStateOf(true) }
 
-        if (dialogOpened) {
+        if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
             CurrencyPickerDialog(
                 currencies = allCurrencies,
                 currencyType = selectedCurrencyType,
                 onPositiveClick = {
+                    if (selectedCurrencyType is CurrencyType.Source) {
+                        viewModel.sendEvent(HomeUiEvent.SaveSourceCurrencyCode(code = it.name))
+                    } else if (selectedCurrencyType is CurrencyType.Target) {
+                        viewModel.sendEvent(HomeUiEvent.SaveTargetCurrencyCode(code = it.name))
+                    }
+                    selectedCurrencyType = CurrencyType.None
                     dialogOpened = false
                 },
                 onDismiss = {
+                    selectedCurrencyType = CurrencyType.None
                     dialogOpened = false
                 }
             )
@@ -61,6 +68,10 @@ class HomeScreen : Screen {
                 },
                 onSwitchClick = {
                     viewModel.sendEvent(HomeUiEvent.SwitchCurrencies)
+                },
+                onCurrencyTypeSelect = { currencyType ->
+                    selectedCurrencyType = currencyType
+                    dialogOpened = true
                 })
         }
     }

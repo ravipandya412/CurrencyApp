@@ -44,6 +44,7 @@ import currencyapp.composeapp.generated.resources.refresh_ic
 import currencyapp.composeapp.generated.resources.switch_ic
 import domain.model.Currency
 import domain.model.CurrencyCode
+import domain.model.CurrencyType
 import domain.model.RateStatus
 import domain.model.RequestState
 import domain.model.RequestState.Idle.DisplayResult
@@ -61,7 +62,8 @@ fun HomeHeader(
     amount: Double,
     onAmountChange: (Double) -> Unit,
     onRatesRefresh: () -> Unit,
-    onSwitchClick: () -> Unit
+    onSwitchClick: () -> Unit,
+    onCurrencyTypeSelect: (CurrencyType) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -79,7 +81,8 @@ fun HomeHeader(
         CurrencyInputs(
             source = source,
             target = target,
-            onSwitchClick = onSwitchClick
+            onSwitchClick = onSwitchClick,
+            onCurrencyTypeSelect = onCurrencyTypeSelect
         )
         Spacer(modifier = Modifier.height(24.dp))
         AmountInput(
@@ -138,7 +141,8 @@ fun RatesStatus(
 fun CurrencyInputs(
     source: RequestState<Currency>,
     target: RequestState<Currency>,
-    onSwitchClick: () -> Unit
+    onSwitchClick: () -> Unit,
+    onCurrencyTypeSelect: (CurrencyType) -> Unit
 ) {
     var animationStarted by remember { mutableStateOf(false) }
     val animatedRotation by animateFloatAsState(
@@ -152,7 +156,15 @@ fun CurrencyInputs(
         CurrencyView(
             placeHolder = "From",
             currency = source,
-            onClick = {})
+            onClick = {
+                if (source.isSuccess()) {
+                    onCurrencyTypeSelect(
+                        CurrencyType.Source(
+                            currencyCode = CurrencyCode.valueOf(source.getSuccessData().code)
+                        )
+                    )
+                }
+            })
         Spacer(modifier = Modifier.height(14.dp))
         IconButton(
             modifier = Modifier.padding(24.dp).graphicsLayer {
@@ -173,7 +185,15 @@ fun CurrencyInputs(
         CurrencyView(
             placeHolder = "To",
             currency = target,
-            onClick = {})
+            onClick = {
+                if (target.isSuccess()) {
+                    onCurrencyTypeSelect(
+                        CurrencyType.Target(
+                            currencyCode = CurrencyCode.valueOf(target.getSuccessData().code)
+                        )
+                    )
+                }
+            })
     }
 }
 

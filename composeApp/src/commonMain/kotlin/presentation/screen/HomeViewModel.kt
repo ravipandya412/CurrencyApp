@@ -13,6 +13,7 @@ import domain.model.CurrencyApiService
 import domain.model.RateStatus
 import domain.model.RequestState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -21,6 +22,9 @@ import kotlinx.datetime.Clock
 sealed class HomeUiEvent {
     data object RefreshRates : HomeUiEvent()
     data object SwitchCurrencies : HomeUiEvent()
+    data class SaveSourceCurrencyCode(val code: String) : HomeUiEvent()
+    data class SaveTargetCurrencyCode(val code: String) : HomeUiEvent()
+
 
 }
 
@@ -61,6 +65,14 @@ class HomeViewModel(
             HomeUiEvent.SwitchCurrencies -> {
                 switchCurrencies()
             }
+
+            is HomeUiEvent.SaveSourceCurrencyCode -> {
+                saveSourceCurrencyCde(event.code)
+            }
+
+            is HomeUiEvent.SaveTargetCurrencyCode -> {
+                saveTargetCurrencyCde(event.code)
+            }
         }
     }
 
@@ -70,6 +82,18 @@ class HomeViewModel(
 
         _sourceCurrency.value = target
         _targetCurrency.value = source
+    }
+
+    private fun saveSourceCurrencyCde(code: String) {
+        screenModelScope.launch(Dispatchers.IO) {
+            preferences.saveSourceCurrencyCode(code)
+        }
+    }
+
+    private fun saveTargetCurrencyCde(code: String) {
+        screenModelScope.launch(Dispatchers.IO) {
+            preferences.saveTargetCurrencyCode(code)
+        }
     }
 
     private fun readSourceCurrency() {

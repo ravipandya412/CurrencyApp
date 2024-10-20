@@ -24,8 +24,6 @@ sealed class HomeUiEvent {
     data object SwitchCurrencies : HomeUiEvent()
     data class SaveSourceCurrencyCode(val code: String) : HomeUiEvent()
     data class SaveTargetCurrencyCode(val code: String) : HomeUiEvent()
-
-
 }
 
 class HomeViewModel(
@@ -56,20 +54,17 @@ class HomeViewModel(
 
     fun sendEvent(event: HomeUiEvent) {
         when (event) {
-            HomeUiEvent.RefreshRates -> {
+            is HomeUiEvent.RefreshRates -> {
                 screenModelScope.launch {
                     fetchNewRates()
                 }
             }
-
-            HomeUiEvent.SwitchCurrencies -> {
+            is HomeUiEvent.SwitchCurrencies -> {
                 switchCurrencies()
             }
-
             is HomeUiEvent.SaveSourceCurrencyCode -> {
                 saveSourceCurrencyCde(event.code)
             }
-
             is HomeUiEvent.SaveTargetCurrencyCode -> {
                 saveTargetCurrencyCde(event.code)
             }

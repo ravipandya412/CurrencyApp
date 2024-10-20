@@ -52,19 +52,19 @@ sealed class RequestState<out T> {
                 horizontalArrangement = Arrangement.Center
             ) {
                 when (state) {
-                    is RequestState.Idle -> {
+                    is Idle -> {
                         onIdle?.invoke()
                     }
 
-                    is RequestState.Loading -> {
+                    is Loading -> {
                         onLoading?.invoke()
                     }
 
-                    is RequestState.Error -> {
+                    is Error -> {
                         onError?.invoke(state.getErrorMessage())
                     }
 
-                    is RequestState.Success -> {
+                    is Success -> {
                         onSuccess(state.getSuccessData())
                     }
                 }

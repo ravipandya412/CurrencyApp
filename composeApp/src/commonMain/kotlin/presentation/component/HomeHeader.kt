@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
@@ -164,10 +165,11 @@ fun CurrencyInputs(
                         )
                     )
                 }
-            })
+            }
+        )
         Spacer(modifier = Modifier.height(14.dp))
         IconButton(
-            modifier = Modifier.padding(24.dp).graphicsLayer {
+            modifier = Modifier.padding(top = 24.dp).graphicsLayer {
                 rotationY = animatedRotation
             },
             onClick = {
@@ -197,7 +199,6 @@ fun CurrencyInputs(
     }
 }
 
-
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun RowScope.CurrencyView(
@@ -207,12 +208,12 @@ fun RowScope.CurrencyView(
 ) {
     Column(modifier = Modifier.weight(1f)) {
         Text(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(start = 12.dp),
             text = placeHolder,
             fontSize = MaterialTheme.typography.bodySmall.fontSize,
             color = Color.White
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(4.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -235,7 +236,7 @@ fun RowScope.CurrencyView(
                         tint = Color.Unspecified,
                         contentDescription = "Country Flag"
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = CurrencyCode.valueOf(data.code).name,
                         fontWeight = FontWeight.Bold,
@@ -254,7 +255,8 @@ fun AmountInput(
     onAmountChange: (Double) -> Unit
 ) {
     TextField(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .clip(RoundedCornerShape(size = 8.dp))
             .animateContentSize()
             .height(54.dp),

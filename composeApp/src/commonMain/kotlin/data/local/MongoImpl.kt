@@ -19,8 +19,11 @@ class MongoImpl : MongoRepository {
 
     override fun configureTheRealm() {
         if (realm == null || realm!!.isClosed()) {
-            val config = RealmConfiguration.Builder(schema = setOf(Currency::class))
-                .compactOnLaunch().build()
+            val config = RealmConfiguration.Builder(
+                schema = setOf(Currency::class)
+            )
+                .compactOnLaunch()
+                .build()
             realm = Realm.open(config)
         }
     }
@@ -35,9 +38,7 @@ class MongoImpl : MongoRepository {
             ?.map { result ->
                 RequestState.Success(data = result.list)
             }
-            ?: flow {
-                RequestState.Error(message = "realm not Configured")
-            }
+            ?: flow { RequestState.Error(message = "Realm not configured.") }
     }
 
     override suspend fun cleanUp() {

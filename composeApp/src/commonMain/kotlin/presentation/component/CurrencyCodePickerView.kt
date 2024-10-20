@@ -92,7 +92,7 @@ fun CurrencyCodePickerView(
 }
 
 @Composable
-fun CurrencyCodeSelector(isSelected: Boolean = false) {
+private fun CurrencyCodeSelector(isSelected: Boolean = false) {
     val animatedColor by animateColorAsState(
         targetValue = if (isSelected) primaryColor else textColor.copy(alpha = 0.1f),
         animationSpec = tween(durationMillis = 300)

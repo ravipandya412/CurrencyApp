@@ -31,7 +31,7 @@ class HomeScreen : Screen {
 
         var selectedCurrencyType: CurrencyType by remember { mutableStateOf(CurrencyType.None) }
 
-        var dialogOpened by remember { mutableStateOf(true) }
+        var dialogOpened by remember { mutableStateOf(false) }
 
         if (dialogOpened && selectedCurrencyType != CurrencyType.None) {
             CurrencyPickerDialog(

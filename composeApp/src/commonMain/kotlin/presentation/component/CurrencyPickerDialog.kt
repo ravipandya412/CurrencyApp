@@ -17,6 +17,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -40,8 +41,8 @@ fun CurrencyPickerDialog(
     onPositiveClick: (CurrencyCode) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val currencyList = remember {
-        mutableListOf<Currency>().apply { addAll(currencies) }
+    val currencyList = remember(key1 = currencies) {
+        mutableStateListOf<Currency>().apply { addAll(currencies) }
     }
 
     var searchQuery by remember { mutableStateOf("") }

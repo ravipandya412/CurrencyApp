@@ -69,9 +69,9 @@ fun HomeHeader(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+            .clip(RoundedCornerShape(bottomStart = 15.dp, bottomEnd = 12.dp))
             .background(headerColor)
-            .padding(24.dp)
+            .padding(top = 24.dp)
     ) {
         Spacer(modifier = Modifier.height(24.dp))
         RatesStatus(

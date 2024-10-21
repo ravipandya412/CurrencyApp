@@ -5,7 +5,7 @@ import ComposeApp
 struct iOSApp: App {
     
     init() {
-      KoinModuleKt.initializeKoin()
+      KoinModuleKt.intializeKoin()
     }
     
     var body: some Scene {

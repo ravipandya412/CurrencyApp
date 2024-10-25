@@ -1,7 +1,6 @@
 This CurrencyApp is built using Compose Multiplatform.
 
 It uses:
-- Compose Multiplatform Framework
 - Working with a Local Database (MongoDB Realm)
 - Working with Network (Ktor)
 - Offline Cache

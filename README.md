@@ -20,12 +20,13 @@ It uses:
 * `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
   you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
 
-
-
-
-
-
-
-
 https://github.com/user-attachments/assets/9f549d8c-964f-4231-92b0-7657b6cef67f
+
+
+
+https://github.com/user-attachments/assets/cf3721cb-9358-4e8a-878e-1f336e65db0b
+
+
+
+
 

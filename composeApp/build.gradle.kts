@@ -1,4 +1,4 @@
-
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -15,6 +15,9 @@ kotlin {
             }
         }
     }
+
+    //val xcf = XCFramework()
+
     
     listOf(
         iosX64(),
@@ -24,8 +27,10 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            //xcf.add(this)
         }
     }
+
     
     sourceSets {
         
